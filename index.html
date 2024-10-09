@@ -79,7 +79,7 @@
 		<div id="about-paint-header">
 			<img src="images/icons/128x128.png" width="128" height="128" id="about-paint-icon" alt="" />
 			<div id="about-paint-beside-icon">
-				<h1 id="jspaint-project-name">JS Paint</h1>
+				<h1 id="jspaint-project-name">JS Paint<br />for StreamElements</h1>
 				<div id="jspaint-version" title="About time to increment the version number, don't you think?">
 					Version 1.0.0+
 				</div>
@@ -112,7 +112,7 @@
 				</div>
 			</div>
 			<!-- @#: What's New? -->
-			<button id="view-project-news">What's&nbsp;New?</button>
+			<!-- <button id="view-project-news">What's&nbsp;New?</button> -->
 		</div>
 
 		<!-- <p>JS Paint is a web-based MS Paint remake by <a href="https://isaiahodhner.io/">Isaiah Odhner</a>.</p> -->
@@ -122,20 +122,8 @@
 		<!-- <p>Request features and report bugs <a href="https://github.com/1j01/jspaint/issues">on GitHub</a>
 			or <a href="mailto:isaiahodhner@gmail.com?subject=JS%20Paint">by email</a>.</p> -->
 		<p>
-			Feedback:
-			<a href="https://github.com/1j01/jspaint/issues" target="_blank">GitHub</a>
-			or <a href="mailto:isaiahodhner@gmail.com?subject=JS%20Paint">E-mail</a>
-			or <a href="https://discord.gg/SyFweYjTKx" target="_blank">Discord</a>
-		</p>
-		<!-- <p>Support the project at <a href="https://www.paypal.me/IsaiahOdhner"
-			target="_blank">paypal.me/IsaiahOdhner</a>.</p> -->
-		<p>Donate: <a href="https://www.paypal.me/IsaiahOdhner" target="_blank">paypal.me/IsaiahOdhner</a></p>
-		<p>
-			<a href="about.html" target="_blank">Homepage</a>
-			&middot;
-			<a href="https://github.com/1j01/jspaint/blob/master/LICENSE.txt" target="_blank">MIT License</a>
-			&middot;
-			<a href="privacy.html" target="_blank">Privacy Policy</a>
+			Forked for the pleasure of <a href="https://streamelements.com/" target="_blank">StreamElements</a> users by
+			cookie.
 		</p>
 	</div>
 	<script type="module" src="src/test-news.js"></script>
@@ -297,8 +285,7 @@
 			<p>
 				The Modern theme has been renamed <b>Modern Light</b> and a new <b>Modern Dark</b> theme has been added.
 			</p>
-			<div
-				style="background: #c0c0c0; padding: 1em; padding-bottom: 0.1em; border-radius: .5em; border: 1px inset;">
+			<div style="background: #c0c0c0; padding: 1em; padding-bottom: 0.1em; border-radius: .5em; border: 1px inset;">
 				Modern Light before (tool icons from Windows Vista):<br>
 				<img alt=""
 					src="https://github.com/1j01/jspaint/blob/master/images/modern/vista-tools-spaced-like-svg.png?raw=true">
@@ -306,8 +293,7 @@
 				Modern Light after (custom SVG icons):<br>
 				<!-- TODO: custom pixel-fine-tuned PNG; SVG is designed to align with the pixel grid but it's not perfect -->
 				<!-- <img alt="" src="images/modern/modern-light-tools.png"> -->
-				<img alt=""
-					src="https://github.com/1j01/jspaint/blob/master/images/modern/modern-light-tools.svg?raw=true">
+				<img alt="" src="https://github.com/1j01/jspaint/blob/master/images/modern/modern-light-tools.svg?raw=true">
 			</div>
 			<p>
 				I designed a custom icon set, inspired by Windows Vista's icons.
@@ -460,8 +446,7 @@
 			<p>
 				<b>Colors > Save Colors</b> also now asks for a file name and format.
 				An absurd number of file formats are <a
-					href="https://github.com/1j01/jspaint?tab=readme-ov-file#color-palette-formats"
-					target="_blank">supported</a>.
+					href="https://github.com/1j01/jspaint?tab=readme-ov-file#color-palette-formats" target="_blank">supported</a>.
 				You can even export CSS variables for use in a web design project.
 			</p>
 			<p>
@@ -494,8 +479,7 @@
 			</p>
 			<h2>Homepage</h2>
 			<p>
-				JS Paint now has a homepage at <a href="https://jspaint.app/about"
-					target="_blank">jspaint.app/about</a>.
+				JS Paint now has a homepage at <a href="https://jspaint.app/about" target="_blank">jspaint.app/about</a>.
 			</p>
 			<p>
 				I designed it like a 90s website.
@@ -758,8 +742,8 @@
 				alt="Calligraphy where the shapes of the tools in Paint make up Arabic words for them."
 				src="https://i.postimg.cc/NFX2TTp1/untitled-45.png" />
 			<p>
-				If you want to contribute translations, <a target="_blank"
-					href="https://github.com/1j01/jspaint/issues/80">get in touch!</a>
+				If you want to contribute translations, <a target="_blank" href="https://github.com/1j01/jspaint/issues/80">get
+					in touch!</a>
 				I need to do some technical work to set up for community translations on a public platform,
 				but I'm glad people have already expressed interest in helping translate!
 				(I also want to simplify the language in various parts of the UI before asking people to translate
@@ -796,8 +780,8 @@
 				It can also be frustrating, and takes some practice to master.
 			</p>
 			<p>
-				A good place to start is coloring line art using just the Fill tool (<img src="help/p_paint.gif"
-					width="15" height="11" alt="">):
+				A good place to start is coloring line art using just the Fill tool (<img src="help/p_paint.gif" width="15"
+					height="11" alt="">):
 			</p>
 			<ul>
 				<li>
@@ -1157,8 +1141,7 @@
 				<feFlood result="hilight-color" flood-color="var(--ButtonHilight)" />
 				<feOffset in="black-and-blue-parts-isolated" dx="1" dy="1" result="offset" />
 				<feComposite in="hilight-color" in2="offset" operator="in" result="hilight-colored-offset" />
-				<feComposite in="shadow-color" in2="black-and-blue-parts-isolated" operator="in"
-					result="shadow-colored" />
+				<feComposite in="shadow-color" in2="black-and-blue-parts-isolated" operator="in" result="shadow-colored" />
 				<feMerge>
 					<feMergeNode in="hilight-colored-offset" />
 					<feMergeNode in="shadow-colored" />
