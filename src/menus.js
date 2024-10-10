@@ -694,6 +694,18 @@ const menus = {
 	],
 	[localize("E&xtras")]: [
 		{
+			emoji_icon: "🖥️",
+			label: localize("Overlay (Browser Source)"),
+			speech_recognition: [
+				"overlay", "obs overlay", "obs browser source", "obs browser", "obs",
+			],
+			action: () => {
+				window.open(location.href.replace("/#", "/overlay.html#"), "_blank");
+			},
+			description: localize("Get an overlay browser-source of this image for your streaming tool."),
+		},
+		MENU_DIVIDER,
+		{
 			emoji_icon: "⌚",
 			label: localize("&History"),
 			...shortcut("Ctrl+Shift+Y"),

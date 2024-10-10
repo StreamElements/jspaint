@@ -2709,7 +2709,114 @@ function clear() {
 		}
 	});
 }
+let cleanup_overlay_view = () => { };
+function view_overlay() {
+	cleanup_overlay_view();
 
+	const bitmap_view_div = document.createElement("div");
+	bitmap_view_div.classList.add("bitmap-view", "inset-deep");
+	document.body.appendChild(bitmap_view_div);
+	$(".jspaint").css("display", "none");
+	$("body").css("background", "transparent");
+	$(bitmap_view_div).css({
+		display: "flex",
+		alignItems: "start",
+		justifyContent: "left",
+		position: "fixed",
+		top: "0",
+		left: "0",
+		width: "100%",
+		height: "100%",
+		zIndex: "9999",
+		background: "transparent",
+	});
+
+	let blob_url;
+
+	cleanup_overlay_view = () => {
+		document.removeEventListener("fullscreenchange", onFullscreenChange);
+		document.removeEventListener("webkitfullscreenchange", onFullscreenChange);
+		// document.removeEventListener("keydown", onKeyDown);
+		document.removeEventListener("mousedown", onMouseDown);
+		// If you have e.g. the Help window open,
+		// and right click to close the View Bitmap, with the mouse over the window,
+		// this needs a delay to cancel the context menu.
+		setTimeout(() => {
+			document.removeEventListener("contextmenu", onContextMenu);
+		}, 100);
+		URL.revokeObjectURL(blob_url);
+		// clearInterval(iid);
+		if (document.fullscreenElement === bitmap_view_div || document.webkitFullscreenElement === bitmap_view_div) {
+			if (document.exitFullscreen) {
+				document.exitFullscreen(); // avoid warning in Firefox
+			} else if (document.msExitFullscreen) {
+				document.msExitFullscreen();
+			} else if (document.mozCancelFullScreen) {
+				document.mozCancelFullScreen();
+			} else if (document.webkitExitFullscreen) {
+				document.webkitExitFullscreen();
+			}
+		}
+		bitmap_view_div.remove();
+		cleanup_overlay_view = () => { };
+	};
+	document.addEventListener("fullscreenchange", onFullscreenChange, { once: true });
+	document.addEventListener("webkitfullscreenchange", onFullscreenChange, { once: true });
+	// document.addEventListener("keydown", onKeyDown);
+	document.addEventListener("mousedown", onMouseDown);
+	document.addEventListener("contextmenu", onContextMenu);
+
+	function onFullscreenChange() {
+		if (document.fullscreenElement !== bitmap_view_div && document.webkitFullscreenElement !== bitmap_view_div) {
+			cleanup_bitmap_view();
+		}
+	}
+	// let repeating_f = false;
+	// function onKeyDown(event) {
+	// 	// console.log(event.key, event.repeat);
+	// 	repeating_f = repeating_f || event.repeat && (event.key === "f" || event.key === "F");
+	// 	if (event.repeat) { return; }
+	// 	if (repeating_f && (event.key === "f" || event.key === "F")) {
+	// 		repeating_f = false;
+	// 		return; // Chrome sends an F keydown with repeat=false if you release Ctrl before F, while repeating.
+	// 		// This is a slightly overkill, and slightly overzealous workaround (can ignore one normal F before handling F as exit)
+	// 	}
+	// 	// Prevent also toggling View Bitmap on while toggling off, with Ctrl+F+F.
+	// 	// That is, if you hold Ctrl and press F twice, the second F should close View Bitmap and not reopen it immediately.
+	// 	// This relies on the keydown handler handling event.defaultPrevented (or isDefaultPrevented() if it's using jQuery)
+	// 	event.preventDefault();
+	// 	// Note: in mspaint, Esc is the only key that DOESN'T close the bitmap view,
+	// 	// but it also doesn't do anything else — other than changing the cursor. Stupid.
+	// 	cleanup_bitmap_view();
+	// }
+	function onMouseDown(_event) {
+		// Note: in mspaint, only left click exits View Bitmap mode.
+		// Right click can show a useless context menu.
+		cleanup_bitmap_view();
+	}
+	function onContextMenu(event) {
+		event.preventDefault();
+		cleanup_bitmap_view(); // not needed
+	}
+
+	// @TODO: include selection in the bitmap
+	// I believe mspaint uses a similar code path to the Thumbnail,
+	// considering that if you right click on the image in View Bitmap mode,
+	// it shows the silly "Thumbnail" context menu item.
+	// (It also shows the selection, in a meaningless place, similar to the Thumbnail's bugs)
+	const img = document.createElement("img");
+	main_canvas.toBlob((blob) => {
+		blob_url = URL.createObjectURL(blob);
+		img.src = blob_url;
+		bitmap_view_div.appendChild(img);
+	}, "image/png");
+	setInterval(() => {
+		main_canvas.toBlob((blob) => {
+			blob_url = URL.createObjectURL(blob);
+			img.src = blob_url;
+		}, "image/png");
+	}, 100);
+}
 let cleanup_bitmap_view = () => { };
 function view_bitmap() {
 	cleanup_bitmap_view();
@@ -4200,7 +4307,7 @@ export {
 	file_save_as, getSelectionText, get_all_url_params, get_history_ancestors, get_tool_by_id, get_uris, get_url_param, go_to_history_node, handle_keyshortcuts, has_any_transparency, image_attributes, image_flip_and_rotate, image_invert_colors, image_stretch_and_skew, load_image_from_uri, load_theme_from_text, make_history_node, make_monochrome_palette, make_monochrome_pattern, make_opaque, make_or_update_undoable, make_stripe_pattern, meld_selection_into_canvas,
 	meld_textbox_into_canvas, open_from_file, open_from_image_info, paste, paste_image_from_file, please_enter_a_number, read_image_file, redo, render_canvas_view, render_history_as_gif, reset_canvas_and_history, reset_file, reset_selected_colors, resize_canvas_and_save_dimensions, resize_canvas_without_saving_dimensions, sanity_check_blob, save_as_prompt, save_selection_to_file, select_all, select_tool, select_tools, set_all_url_params, set_magnification, show_about_paint, show_convert_to_black_and_white, show_custom_zoom_window, show_document_history, show_error_message, show_file_format_errors, show_multi_user_setup_dialog, show_news, show_resource_load_error_message, switch_to_polychrome_palette, toggle_grid,
 	toggle_thumbnail, try_exec_command, undo, undoable, update_canvas_rect, update_css_classes_for_conditional_messages, update_disable_aa, update_from_saved_file, update_helper_layer,
-	update_helper_layer_immediately, update_magnified_canvas_size, update_title, view_bitmap, write_image_file
+	update_helper_layer_immediately, update_magnified_canvas_size, update_title, view_bitmap, view_overlay, write_image_file
 };
 // Temporary globals until all dependent code is converted to ES Modules
 window.make_history_node = make_history_node; // used by app-state.js

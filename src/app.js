@@ -9,7 +9,7 @@ import { Handles } from "./Handles.js";
 // import { get_direction, localize } from "./app-localization.js";
 import { default_palette, get_winter_palette } from "./color-data.js";
 import { image_formats } from "./file-format-data.js";
-import { $this_version_news, cancel, change_url_param, clear, confirm_overwrite_capability, delete_selection, deselect, edit_copy, edit_cut, edit_paste, file_new, file_open, file_save, file_save_as, get_tool_by_id, get_uris, image_attributes, image_flip_and_rotate, image_invert_colors, image_stretch_and_skew, load_image_from_uri, make_or_update_undoable, open_from_file, paste, paste_image_from_file, redo, render_history_as_gif, reset_canvas_and_history, reset_file, reset_selected_colors, resize_canvas_and_save_dimensions, resize_canvas_without_saving_dimensions, save_as_prompt, select_all, select_tool, select_tools, set_magnification, show_document_history, show_error_message, show_news, show_resource_load_error_message, toggle_grid, undo, update_canvas_rect, update_disable_aa, update_helper_layer, update_magnified_canvas_size, view_bitmap, write_image_file } from "./functions.js";
+import { $this_version_news, cancel, change_url_param, clear, confirm_overwrite_capability, delete_selection, deselect, edit_copy, edit_cut, edit_paste, file_new, file_open, file_save, file_save_as, get_tool_by_id, get_uris, image_attributes, image_flip_and_rotate, image_invert_colors, image_stretch_and_skew, load_image_from_uri, make_or_update_undoable, open_from_file, paste, paste_image_from_file, redo, render_history_as_gif, reset_canvas_and_history, reset_file, reset_selected_colors, resize_canvas_and_save_dimensions, resize_canvas_without_saving_dimensions, save_as_prompt, select_all, select_tool, select_tools, set_magnification, show_document_history, show_error_message, show_news, show_resource_load_error_message, toggle_grid, undo, update_canvas_rect, update_disable_aa, update_helper_layer, update_magnified_canvas_size, view_bitmap, view_overlay, write_image_file } from "./functions.js";
 import { show_help } from "./help.js";
 import { $G, E, TAU, get_file_extension, get_help_folder_icon, is_discord_embed, make_canvas, to_canvas_coords } from "./helpers.js";
 import { init_webgl_stuff, rotate } from "./image-manipulation.js";
@@ -378,6 +378,9 @@ const update_from_url_params = () => {
 			$(".help-menu-button")[0].dispatchEvent(new Event("pointerup"));
 			$("[aria-label='About Paint']")[0].dispatchEvent(new Event("pointerenter"));
 		}
+		if (location.pathname.match(/overlay/i)) {
+			view_overlay();
+		}
 	}, 500);
 };
 update_from_url_params();
@@ -398,6 +401,9 @@ if (location.search.match(/vertical-colors?-box/)) {
 // #region App UI
 
 const $app = $(E("div")).addClass("jspaint").appendTo("body");
+if (location.pathname.match(/overlay/i)) {
+	$app.css("display", "none");
+}
 window.$app = $app;
 
 const $V = $(E("div")).addClass("vertical").appendTo($app);
@@ -560,7 +566,7 @@ if ($news_indicator.text().includes("Bubblegum")) {
 // #endregion
 
 $status_text.default = () => {
-	$status_text.text(localize("For Help, click Help Topics on the Help Menu."));
+	$status_text.text(localize("StreamElements ❤️ JS Paint."));
 };
 $status_text.default();
 
